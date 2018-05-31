@@ -27,11 +27,11 @@ class YGJokeViewController: UIViewController,UITableViewDelegate,UITableViewData
         super.init(nibName: nil, bundle: nil)
         switch type {
         case .latest:
-            self.url = "https://m2.qiushibaike.com/article/list/latest?count=10&page=\(page)"
+            self.url = "https://m2.qiushibaike.com/article/list/latest?count=20&page=\(page)"
         case .suggest:
-            self.url = "https://m2.qiushibaike.com/article/list/suggest?count=10&page=\(page)"
+            self.url = "https://m2.qiushibaike.com/article/list/suggest?count=20&page=\(page)"
         case .imgrank:
-            self.url = "https://m2.qiushibaike.com/article/list/imgrank?count=10&page=\(page)"
+            self.url = "https://m2.qiushibaike.com/article/list/imgrank?count=20&page=\(page)"
         }
     }
     required init?(coder aDecoder: NSCoder) {
@@ -59,7 +59,7 @@ class YGJokeViewController: UIViewController,UITableViewDelegate,UITableViewData
         Alamofire.request(self.url).response { response in
             
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                
+                print(utf8Text);
                 if let res = YGResponse.deserialize(from: utf8Text) {
                     
                     self.datas = res.items ?? []
@@ -79,14 +79,15 @@ class YGJokeViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = YGJokeCell(style: .default, reuseIdentifier: "JokeCell")
-        
         let joke = self.datas![indexPath.row]
-        
-        cell.updateCell(joke)
 
+        let cell = YGJokeCell(joke: joke)
+
+        cell.selectionStyle = .none
+        
         return cell
     }
+    
     
 
 

@@ -14,6 +14,7 @@ class YGJokeInfo: HandyJSON {
     var low_url: String?
     var content: String?
     var user : YGUserInfo?
+    var high_loc : String?
     
     required init() {}
     
